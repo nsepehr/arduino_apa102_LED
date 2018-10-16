@@ -238,12 +238,7 @@ void meteorRain(byte red, byte green, byte blue, byte meteorSize, byte meteorTra
       } 
     }
 
-    // TODO: change this to all pillars, right? 
-    for(int i=0; i < 2; i++) {
-      
-      showStrip();
-    }
-    //showStrip();
+    showStrip();
     delay(SpeedDelay);
   }
 }
@@ -600,7 +595,10 @@ uint8_t animationCase = 0; // integer for choosing which animation set to play
 
 void loop() {
   // put your main code here, to run repeatedly:
-
+  if (animationCase > 1) {
+    animationCase = 0;
+  }
+  
   if (currentColorInt > colorCount) {
     currentColorInt = 0; // restart the color picker if the count exceeds the list of available colors
   }
@@ -611,7 +609,10 @@ void loop() {
    * This makes for a good test program
    */
   //showOnebyOne(chosenColor, 10);
+  //showRainbow();
+  //meteorRain(0xff,0xff,0xff,10, 64, true, 30);
 
+  
   switch(animationCase) {
     case 0:
       /*
@@ -624,17 +625,23 @@ void loop() {
       showOneAtATimeDown(chosenColor, 10, 10);
       showOneAtATimeUp(chosenColor, 15, 5);
       showOneAtATimeDown(chosenColor, 15, 5);
+      clearPanels();
       break;
     case 1:
       showFromOpposingEnds(chosenColor, 5, 15);
+      clearPanels();
       showFromOpposingEnds(chosenColor, 10, 10);
+      clearPanels();
       showFromOpposingEnds(chosenColor, 15, 5);
+      clearPanels();
     default:
       showOnebyOne(chosenColor, 10);
+      clearPanels();
       break;
   }
 
   currentColorInt++;
+  animationCase++;
   
 }
 
